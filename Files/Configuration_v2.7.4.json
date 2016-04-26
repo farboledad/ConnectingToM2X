@@ -1,0 +1,212 @@
+[
+  {
+    "order": 0,
+    "label": "M2X",
+    "id": "b3e3ea4e.6ce95",
+    "type": "tab",
+    "children": []
+  },
+  {
+    "id": "ca1e812c.ddd358",
+    "type": "M2X key",
+    "__package": "luvitred/services",
+    "__version": "0.1.0",
+    "provision": "device",
+    "m2xkey": "2356862ced929cf38514d615dc1a5214",
+    "deviceid": "407e0811042c52444867a6ba8184651a",
+    "name": "M2X_dev"
+  },
+  {
+    "id": "3d90ac95.17a3ac",
+    "type": "M2X out",
+    "__package": "luvitred/services",
+    "__version": "0.1.0",
+    "m2xkey": "ca1e812c.ddd358",
+    "field": "payload",
+    "alias": "",
+    "createstreams": true,
+    "queueenabled": false,
+    "queue": "",
+    "name": "M2X_out",
+    "x": 637.5,
+    "y": 275,
+    "z": "b3e3ea4e.6ce95",
+    "wires": []
+  },
+  {
+    "id": "cfa5a81b.dfcf08",
+    "type": "inject",
+    "__package": "luvitred/core-core",
+    "__version": "0.1.0",
+    "name": "Random1",
+    "topic": "random1",
+    "payload": "",
+    "payloadType": "rinteger",
+    "fromval": 0,
+    "toval": "100",
+    "repeat": "10",
+    "crontab": "",
+    "once": false,
+    "x": 262.5,
+    "y": 225,
+    "z": "b3e3ea4e.6ce95",
+    "wires": [
+      [
+        "d24af0fe.31ad7"
+      ]
+    ]
+  },
+  {
+    "id": "8d631513.b5bae8",
+    "type": "debug",
+    "__package": "luvitred/core-core",
+    "__version": "0.1.0",
+    "name": "",
+    "all": false,
+    "active": false,
+    "console": "false",
+    "complete": "false",
+    "x": 625,
+    "y": 325,
+    "z": "b3e3ea4e.6ce95",
+    "wires": []
+  },
+  {
+    "id": "ceb0cacc.0cffd",
+    "type": "inject",
+    "__package": "luvitred/core-core",
+    "__version": "0.1.0",
+    "name": "Random2",
+    "topic": "random2",
+    "payload": "",
+    "payloadType": "rnumber",
+    "fromval": 0,
+    "toval": "100",
+    "repeat": "10",
+    "crontab": "",
+    "once": false,
+    "x": 262.5,
+    "y": 325,
+    "z": "b3e3ea4e.6ce95",
+    "wires": [
+      [
+        "d24af0fe.31ad7"
+      ]
+    ]
+  },
+  {
+    "id": "d24af0fe.31ad7",
+    "type": "combine",
+    "__package": "luvitred/core-logic",
+    "__version": "0.1.0",
+    "condition": "random1 and random2",
+    "clear": "random1,random2",
+    "topic": "report",
+    "collapse": false,
+    "name": "Combined",
+    "x": 437.5,
+    "y": 275,
+    "z": "b3e3ea4e.6ce95",
+    "wires": [
+      [
+        "8d631513.b5bae8",
+        "3d90ac95.17a3ac"
+      ]
+    ]
+  },
+  {
+    "id": "e7f277a2.8b8438",
+    "type": "M2X",
+    "__package": "luvitred/services",
+    "__version": "0.1.0",
+    "m2xkey": "ca1e812c.ddd358",
+    "getlimit": "10",
+    "queueenabled": false,
+    "queue": "",
+    "details": true,
+    "name": "M2X_in",
+    "x": 287.5,
+    "y": 100,
+    "z": "b3e3ea4e.6ce95",
+    "wires": [
+      [
+        "e7b2915c.bf3c6",
+        "6a17b739.c6312"
+      ]
+    ]
+  },
+  {
+    "id": "81afd9c.fdf4828",
+    "type": "inject",
+    "__package": "luvitred/core-core",
+    "__version": "0.1.0",
+    "name": "GET",
+    "topic": "",
+    "payload": "get",
+    "payloadType": "string",
+    "fromval": 0,
+    "toval": 10,
+    "repeat": "10",
+    "crontab": "",
+    "once": true,
+    "x": 125,
+    "y": 100,
+    "z": "b3e3ea4e.6ce95",
+    "wires": [
+      [
+        "e7f277a2.8b8438"
+      ]
+    ]
+  },
+  {
+    "id": "e7b2915c.bf3c6",
+    "type": "debug",
+    "__package": "luvitred/core-core",
+    "__version": "0.1.0",
+    "name": "",
+    "all": false,
+    "active": true,
+    "console": "false",
+    "complete": "true",
+    "x": 450,
+    "y": 150,
+    "z": "b3e3ea4e.6ce95",
+    "wires": []
+  },
+  {
+    "id": "6a17b739.c6312",
+    "type": "change",
+    "__package": "luvitred/core-logic",
+    "__version": "0.1.0",
+    "action": "replace",
+    "property": "m2x.status",
+    "from": "",
+    "to": "\"process\"",
+    "reg": false,
+    "name": "Processed",
+    "x": 462.5,
+    "y": 100,
+    "z": "b3e3ea4e.6ce95",
+    "wires": [
+      [
+        "7ef97827.93a74",
+        "3d90ac95.17a3ac"
+      ]
+    ]
+  },
+  {
+    "id": "7ef97827.93a74",
+    "type": "debug",
+    "__package": "luvitred/core-core",
+    "__version": "0.1.0",
+    "name": "",
+    "all": false,
+    "active": true,
+    "console": "false",
+    "complete": "true",
+    "x": 650,
+    "y": 150,
+    "z": "b3e3ea4e.6ce95",
+    "wires": []
+  }
+]
